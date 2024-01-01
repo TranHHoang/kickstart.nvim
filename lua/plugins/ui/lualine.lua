@@ -10,8 +10,8 @@ return {
       section_separators = { left = '', right = '' },
     },
     sections = {
-      lualine_c = { '%=', 'filename', 'encoding', 'fileformat', { 'filetype', icon_only = false, colored = true } },
-      lualine_x = { { 'datetime', style = '%H:%M' } }
+      lualine_c = { { 'filename', path = 1 }, },
+      --   -- lualine_x = { { 'datetime', style = '%H:%M' } }
     }
   },
 }

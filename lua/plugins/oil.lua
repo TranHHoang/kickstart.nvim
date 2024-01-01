@@ -4,6 +4,6 @@ return {
   opts = {},
   -- Optional dependencies
   keys = {
-    { '<leader>o', '<CMD>Oil<CR>', desc = 'Open [O]il' },
+    { '<leader>o', '<CMD>Oil --float<CR>', desc = 'Open [O]il' },
   },
 }

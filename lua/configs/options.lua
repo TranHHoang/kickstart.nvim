@@ -59,3 +59,6 @@ opt.showmode = false
 
 -- No wrap
 opt.wrap = false
+
+-- Setup GUI font
+opt.guifont = 'FantasqueSansM Nerd Font:h13'

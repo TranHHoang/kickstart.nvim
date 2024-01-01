@@ -4,13 +4,13 @@ return {
   opts = {
     size = function(term)
       if term.direction == "horizontal" then
-        return 15
+        return 10
       elseif term.direction == "vertical" then
         return vim.o.columns * 0.4
       end
     end,
     shading_factor = 0,
-    direction = 'vertical'
+    direction = 'horizontal'
   },
   keys = {
     { "<C-\\>", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },

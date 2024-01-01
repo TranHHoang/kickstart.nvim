@@ -16,9 +16,8 @@ return {
         return vim.fn.executable 'make' == 1
       end,
     },
-    {
-      'nvim-telescope/telescope-ui-select.nvim',
-    },
+    'nvim-telescope/telescope-ui-select.nvim',
+    "nvim-telescope/telescope-file-browser.nvim",
   },
   opts = function()
     return {

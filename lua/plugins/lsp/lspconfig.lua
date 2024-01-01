@@ -28,7 +28,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<C-k>', vim.diagnostic.open_float, 'Floating diagnostic')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -42,6 +42,8 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  vim.diagnostic.config { virtual_text = false }
 end
 
 return {
@@ -67,6 +69,11 @@ return {
       ft = { "typescript", "typescriptreact", "javascript" },
       opts = {
         on_attach = on_attach,
+        settings = {
+          tsserver_plugins = {
+            "@styled/typescript-styled-plugin"
+          }
+        }
       },
     },
   },
@@ -84,13 +91,13 @@ return {
     --  If you want to override the default filetypes that your language server will attach to you can
     --  define the property 'filetypes' to the map in question.
     local servers = {
-      -- clangd = {},
-      -- gopls = {},
-      -- pyright = {},
-      -- rust_analyzer = {},
-      -- tsserver = {},
-      -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+      -- JS/TS
+      eslint = {
+        experimental = {
+          useFlatConfig = true,
+        }
+      },
+      -- Lua
       lua_ls = {
         Lua = {
           workspace = { checkThirdParty = false },
@@ -122,6 +129,22 @@ return {
           on_attach = on_attach,
           settings = servers[server_name],
           filetypes = (servers[server_name] or {}).filetypes,
+        }
+      end,
+      ["eslint"] = function(server_name)
+        local lspconfig = require "lspconfig"
+
+        lspconfig[server_name].setup {
+          capabilities = capabilities,
+          on_attach = function(_, bufnr)
+            on_attach(_, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              command = "EslintFixAll",
+            })
+          end,
+          root_dir = lspconfig.util.find_git_ancestor,
+          settings = servers[server_name],
         }
       end,
     }

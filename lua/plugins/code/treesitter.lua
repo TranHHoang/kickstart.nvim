@@ -3,6 +3,7 @@ return {
   'nvim-treesitter/nvim-treesitter',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    { 'windwp/nvim-ts-autotag', opts = {} },
   },
   build = ':TSUpdate',
   opts = {
@@ -10,7 +11,6 @@ return {
     ensure_installed = { 'lua', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = true,
-
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
